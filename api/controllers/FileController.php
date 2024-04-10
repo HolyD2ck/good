@@ -1,7 +1,7 @@
 <?php
 namespace api\controllers;
+
 use Yii;
-use yii\web\Response;
 use yii\rest\ActiveController;
 use yii\web\UploadedFile;
 use common\models\File;
@@ -13,27 +13,29 @@ class FileController extends ActiveController
     public function actionUpload()
     {
         $model = new File();
-        $model->file = UploadedFile::getInstanceByName('file'); 
-    
-        if (!$model->file) {
-            Yii::error('Файл не был получен');
-            return ['success' => false, 'message' => 'Файл не был получен'];
+        $model->file = UploadedFile::getInstanceByName('file');
+
+        if (!$model->file || !$model->validate()) {
+            return $this->formatResponse(false, 'Китай вами НЕ ГОРДИТСЯ вас выслать в ГУЛАГ и отобрать МИСКА РИС:');
         }
-    
-        if($model->validate()){
-            $model->name = $model->file->baseName . '-' .time(). '.' . $model->file->extension;
-            $model->path = $model->upload();
-            if (!$model->save()) {
-                Yii::error('Ошибка сохранения файла: ' . implode(', ', $model->getFirstErrors()));
-                return ['success' => false, 'message' => 'Китай Партия Не Гордиться, Вас Выслать в Гулаг и отобрать Миска рис '. implode(', ', $model->getFirstErrors())];
-            }
-            return ['success' => 'true','messege' => "Китай Партия Гордиться, Вам дать Миска рис и Кошко Жена"];
+
+        $model->name = $this->generateFileName($model->file);
+        $model->path = $model->upload();
+
+        if (!$model->save(false)) {
+            return $this->formatResponse(false, 'Ошибка сохранения файла - - Китай вами НЕ ГОРДИТСЯ вас выслать в ГУЛАГ и отобрать МИСКА РИС: '. implode(', ', $model->getFirstErrors()));
         }
-        
-        else{
-            Yii::error('Ошибка валидации файла: ' . implode(', ', $model->getFirstErrors()));
-            return ['success' => false, 'message' => 'Ошибка валидации файла: ' . implode(', ', $model->getFirstErrors())];
-        }
+
+        return $this->formatResponse(true, "Файл успешно загружен и сохранен в базе данных - Китай вами ГОРДИТЬСЯ! вам выдать МИСКА РИС и КОШКО ЖЕНА");
     }
-    
+
+    private function formatResponse($success, $message)
+    {
+        return ['success' => $success, 'message' => $message];
+    }
+
+    private function generateFileName($file)
+    {
+        return $file->baseName . '-' .time(). '.' . $file->extension;
+    }
 }

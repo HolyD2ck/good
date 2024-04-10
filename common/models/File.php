@@ -1,25 +1,13 @@
 <?php
- 
 namespace common\models;
- 
-use yii\base\Model;
+
 use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 use yii\web\UploadedFile;
- 
+use yii\behaviors\TimestampBehavior;
+
 class File extends ActiveRecord
 {
-    /**
-     * @property integer $id
-     * @property string $name
-     * @property string $path
-     * @property integer $created_at
-     * @property integer $updated_at
-     */
-    
     public $file;
 
     public static function tableName()
@@ -30,9 +18,13 @@ class File extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::class,
+            [
+                'class' => TimestampBehavior::class,
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
         ];
     }
+    
 
     public function rules()
     {
@@ -40,22 +32,22 @@ class File extends ActiveRecord
             [['file'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png,jpg,jpeg,txt,csv,doc,docx,xls,xlsx,ppt,pptx,pdf,odt,ods,'],
         ];
     }
-    
+
     public function upload()
     {
         if ($this->validate()) {
-            $new_name = Yii::getAlias('@api/web/myfiles') . '/' . $this->file->baseName . '-' .time(). '.' . $this->file->extension;
+            $new_name = $this->getFilePath();
             if (!$this->file->saveAs($new_name)) {
-                throw new \Exception('Ошибка сохранения файла: ' . $this->file->error);
+                throw new \Exception('Ошибка сохранения файла - Китай вами НЕ ГОРДИТСЯ вас выслать в ГУЛАГ и отобрать МИСКА РИС: ' . $this->file->error);
             }
             return $new_name;
         } else {
-            throw new \Exception('Ошибка валидации файла: ' . implode(', ', $this->getFirstErrors()));
+            throw new \Exception('Ошибка валидации файла - Китай вами НЕ ГОРДИТСЯ вас выслать в ГУЛАГ и отобрать МИСКА РИС: ' . implode(', ', $this->getFirstErrors()));
         }
     }
 
-    public function getId()
+    private function getFilePath()
     {
-        return $this->getPrimaryKey();
+        return Yii::getAlias('@api/web/myfiles') . '/' . $this->file->baseName . '.' . $this->file->extension;
     }
 }

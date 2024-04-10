@@ -16,8 +16,20 @@ return [
         'request' => [
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
-            ]
+            ],
+            
         ],  
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+                
+                    'logFile' => '@api/runtime/logs/app.log',
+                ],
+            ],
+    ],
          
         'user' => [
             'identityClass' => 'common\models\User',
