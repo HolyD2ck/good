@@ -14,9 +14,14 @@ class FileController extends ActiveController
     public function actionUpload()
     {
         $file =UploadedFile::getInstanceByName(Yii::$app->request->post("file"));
+       
         
         if($file){
-            $file->saveAs(Yii::$app->basePath. '/web/myfiles/'. $file->name);
+            $file->saveAs('api/web/myfiles/'. $file->name);
+            $model = new File();
+            $model->name = $file->name;
+            $model->path='api/web/myfiles/'. $file->name;
+            $model->save();
 
             return ['success' => true, 'messege' => "Китай Партия Гордиться, Вам выдать Кошко Жена и Миска рис"];
         }
