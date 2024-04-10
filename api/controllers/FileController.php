@@ -23,7 +23,7 @@ class FileController extends ActiveController
         $model->path = $model->upload();
 
         if (!$model->save(false)) {
-            return $this->formatResponse(false, 'Ошибка сохранения файла - - Китай вами НЕ ГОРДИТСЯ вас выслать в ГУЛАГ и отобрать МИСКА РИС: '. implode(', ', $model->getFirstErrors()));
+            return $this->formatResponse(false, 'Ошибка сохранения файла - - Китай вами НЕ ГОРДИТСЯ вас выслать в ГУЛАГ и отобрать МИСКА РИС: ' . implode(', ', $model->getFirstErrors()));
         }
 
         return $this->formatResponse(true, "Файл успешно загружен и сохранен в базе данных - Китай вами ГОРДИТЬСЯ! вам выдать МИСКА РИС и КОШКО ЖЕНА");
@@ -36,6 +36,6 @@ class FileController extends ActiveController
 
     private function generateFileName($file)
     {
-        return $file->baseName . '-' .time(). '.' . $file->extension;
+        return $file->baseName . '-' . time() . '.' . $file->extension;
     }
 }
