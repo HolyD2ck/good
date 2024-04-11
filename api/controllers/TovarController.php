@@ -5,7 +5,7 @@ use Yii;
 use yii\rest\ActiveController;
 use yii\web\UploadedFile;
 use yii\web\Response;
-use common\models\Tovars;
+use common\models\Tovar;
 
 class FileController extends ActiveController
 {
@@ -17,7 +17,7 @@ class FileController extends ActiveController
 
         if (!empty(Yii::$app->request->post())) 
         {
-            $tovar = new Tovars();
+            $tovar = new Tovar();
             $tovar->Название = Yii::$app->request->post('name');
             $tovar->Производитель=Yii::$app->request->post('Производитель');
             $tovar->Теги=Yii::$app->request->post('Теги');
@@ -31,9 +31,9 @@ class FileController extends ActiveController
                 return $this->formatResponse(true, "КИТАЙ ГОРД ВАМИ - ТОВАР СОЗДАН");
                 }
             else
-            {
+                {
                 return $this->formatResponse(false,"КИТАЙ ПАРТИЯ ВЫСЛАТЬ ВАС В ГУЛАГ - ТОВАР НЕ СОЗДАН!");
-            }
+                }
         }
 
     }

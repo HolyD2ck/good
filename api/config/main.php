@@ -65,7 +65,7 @@ return [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'file'],
                 'POST files/upload' => 'file/upload', 
 
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'tovar'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'tovars'],
                 'POST tovars/create' => 'tovar/create',
             ],
         ]

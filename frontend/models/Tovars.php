@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace app\models;
 
 use Yii;
 
@@ -9,11 +9,11 @@ use Yii;
  *
  * @property int $id
  * @property string $Название
- * @property string $Производитель
- * @property string $Теги
- * @property int $Цена
- * @property string $Описание
- * @property string $Дата_Производства
+ * @property string|null $Производитель
+ * @property string|null $Теги
+ * @property int|null $Цена
+ * @property string|null $Описание
+ * @property string|null $Дата_Производства
  * @property string $created_at
  * @property string $updated_at
  */
@@ -33,7 +33,7 @@ class Tovars extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Название', 'Производитель', 'Теги', 'Цена', 'Описание', 'Дата_Производства', 'created_at', 'updated_at'], 'required'],
+            [['Название', 'created_at', 'updated_at'], 'required'],
             [['Теги', 'Описание'], 'string'],
             [['Цена'], 'integer'],
             [['Дата_Производства', 'created_at', 'updated_at'], 'safe'],
