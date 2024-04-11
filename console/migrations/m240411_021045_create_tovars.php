@@ -18,7 +18,7 @@ class m240411_021045_create_tovars extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%tovars}}', [
+        $this->createTable('{{%tovar}}', [
             'id' => $this->primaryKey(),
             'Название' => $this->string(255)->notNull(),
             'Производитель' => $this->string(255)->notNull(),
@@ -36,7 +36,7 @@ class m240411_021045_create_tovars extends Migration
      */
     public function down()
     {
-        $this->dropTable('{{%tovars}}');
+        $this->dropTable('{{%tovar}}');
     }
 
     /*

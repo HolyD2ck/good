@@ -3,10 +3,11 @@
 namespace common\models;
 
 use Yii;
+use \yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "tovars".
+ * This is the model class for table "{{%tovar}}".
  *
  * @property int $id
  * @property string $Название
@@ -18,7 +19,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $created_at
  * @property string $updated_at
  */
-class Tovars extends \yii\db\ActiveRecord
+class Tovar extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -27,6 +28,7 @@ class Tovars extends \yii\db\ActiveRecord
     {
         return '{{%tovar}}';
     }
+
     public function behaviors()
     {
         return [
@@ -43,7 +45,7 @@ class Tovars extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Название', 'Производитель', 'Теги', 'Цена', 'Описание', 'Дата_Производства', 'created_at', 'updated_at'], 'required'],
+            [['Название', 'Производитель', 'Теги', 'Цена', 'Описание', 'Дата_Производства'], 'required'],
             [['Теги', 'Описание'], 'string'],
             [['Цена'], 'integer'],
             [['Дата_Производства', 'created_at', 'updated_at'], 'safe'],

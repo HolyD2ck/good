@@ -66,10 +66,13 @@ return [
                 'POST files/upload' => 'file/upload', 
 
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'tovar'],
-                'POST tovars/create' => 'tovar/create',
+                'POST tovars/create' => 'tovar/create', 
+                'PUT tovars/update' => 'tovar/update', 
+                'DELETE tovars/delete' => 'tovar/delete', 
+
+
             ],
         ]
-        
         
     ],
     'params' => $params,
