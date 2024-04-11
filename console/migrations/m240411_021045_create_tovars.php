@@ -21,11 +21,11 @@ class m240411_021045_create_tovars extends Migration
         $this->createTable('{{%tovars}}', [
             'id' => $this->primaryKey(),
             'Название' => $this->string(255)->notNull(),
-            'Производитель' => $this->string(255),
-            'Теги' => $this->text(),
-            'Цена' => $this->integer(),
-            'Описание' => $this->text(),
-            'Дата_Производства'=>$this->date(),
+            'Производитель' => $this->string(255)->notNull(),
+            'Теги' => $this->text()->notNull(),
+            'Цена' => $this->integer()->notNull(),
+            'Описание' => $this->text()->notNull(),
+            'Дата_Производства'=>$this->date()->notNull(),
             'created_at' => $this->dateTime()->notNull(),
             'updated_at' => $this->dateTime()->notNull(),
         ], $tableOptions);
